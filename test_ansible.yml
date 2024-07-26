@@ -1,77 +1,77 @@
 ---
 - name: Test connections to mock servers
-  hosts: all
-  gather_facts: no
-  tasks:
-    - name: Test Powermax connection
-      uri:
-        url: "http://{{ ansible_host }}:{{ ansible_port }}/univmax/restapi/sloprovisioning/symmetrix/{{ serial_no }}/volume"
-        method: POST
-        body:
-          {
-            "volumeIdentifier": {
-              "identifier_name": "test_vol",
-              "volumeIdentifierChoice": "identifier_name"
-            },
-            "capacityUnit": "GB",
-            "cap_gb": 10,
-            "volumeType": "TDEV",
-            "emulation": "FBA"
-          }
-        headers:
-          Content-Type: "application/json"
-        status_code: 200
-        validate_certs: no
-      register: powermax_result
-      tags: powermax
+    hosts: all
+    gather_facts: no
+    tasks:
+        - name: Test Powermax connection
+            uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}/univmax/restapi/sloprovisioning/symmetrix/{{ serial_no }}/volume"
+            method: POST
+            body:
+            {
+                "volumeIdentifier": {
+                "identifier_name": "test_vol",
+                "volumeIdentifierChoice": "identifier_name"
+                },
+                "capacityUnit": "GB",
+                "cap_gb": 10,
+                "volumeType": "TDEV",
+                "emulation": "FBA"
+            }
+            headers:
+            Content-Type: "application/json"
+            status_code: 200
+            validate_certs: no
+        register: powermax_result
+        tags: powermax
 
-    - name: Show Powermax response
-      debug:
-        msg: "{{ powermax_result.json }}"
-      when: powermax_result is defined
-      tags: powermax
+        - name: Show Powermax response
+        debug:
+            msg: "{{ powermax_result.json }}"
+        when: powermax_result is defined
+        tags: powermax
 
-    - name: Test Infinibox connection
-      uri:
-        url: "http://{{ ansible_host }}:{{ ansible_port }}/api/v1/test"
-        method: GET
-        status_code: 200
-        validate_certs: no
-      register: infinibox_result
-      tags: infinibox
+        - name: Test Infinibox connection
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}/api/v1/test"
+            method: GET
+            status_code: 200
+            validate_certs: no
+        register: infinibox_result
+        tags: infinibox
 
-    - name: Show Infinibox response
-      debug:
-        msg: "{{ infinibox_result.json }}"
-      when: infinibox_result is defined
-      tags: infinibox
+        - name: Show Infinibox response
+        debug:
+            msg: "{{ infinibox_result.json }}"
+        when: infinibox_result is defined
+        tags: infinibox
 
-    - name: Test NetApp connection
-      uri:
-        url: "http://{{ ansible_host }}:{{ ansible_port }}/api/v1/test"
-        method: GET
-        status_code: 200
-        validate_certs: no
-      register: netapp_result
-      tags: netapp
+        - name: Test NetApp connection
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}/api/v1/test"
+            method: GET
+            status_code: 200
+            validate_certs: no
+        register: netapp_result
+        tags: netapp
 
-    - name: Show NetApp response
-      debug:
-        msg: "{{ netapp_result.json }}"
-      when: netapp_result is defined
-      tags: netapp
+        - name: Show NetApp response
+        debug:
+            msg: "{{ netapp_result.json }}"
+        when: netapp_result is defined
+        tags: netapp
 
-    - name: Test PowerScale connection
-      uri:
-        url: "http://{{ ansible_host }}:{{ ansible_port }}/api/v1/test"
-        method: GET
-        status_code: 200
-        validate_certs: no
-      register: powerscale_result
-      tags: powerscale
+        - name: Test PowerScale connection
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}/api/v1/test"
+            method: GET
+            status_code: 200
+            validate_certs: no
+        register: powerscale_result
+        tags: powerscale
 
-    - name: Show PowerScale response
-      debug:
-        msg: "{{ powerscale_result.json }}"
-      when: powerscale_result is defined
-      tags: powerscale
+        - name: Show PowerScale response
+        debug:
+            msg: "{{ powerscale_result.json }}"
+        when: powerscale_result is defined
+        tags: powerscale
