@@ -1,0 +1,56 @@
+---
+- name: Check availability of all mock servers
+    hosts: all
+    gather_facts: no
+    tasks:
+        - name: Check Powermax server availability
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}"
+            method: GET
+        register: powermax_result
+        tags: powermax
+
+        - name: Show Powermax server response
+        debug:
+            msg: "Powermax server ({{ inventory_hostname }}) is available: {{ powermax_result.status }}"
+        when: powermax_result.status == 200
+        tags: powermax
+
+        - name: Check Infinibox server availability
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}"
+            method: GET
+        register: infinibox_result
+        tags: infinibox
+
+        - name: Show Infinibox server response
+        debug:
+            msg: "Infinibox server ({{ inventory_hostname }}) is available: {{ infinibox_result.status }}"
+        when: infinibox_result.status == 200
+        tags: infinibox
+
+        - name: Check Netapp server availability
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}"
+            method: GET
+        register: netapp_result
+        tags: netapp
+
+        - name: Show Netapp server response
+        debug:
+            msg: "Netapp server ({{ inventory_hostname }}) is available: {{ netapp_result.status }}"
+        when: netapp_result.status == 200
+        tags: netapp
+
+        - name: Check PowerScale server availability
+        uri:
+            url: "http://{{ ansible_host }}:{{ ansible_port }}"
+            method: GET
+        register: powerscale_result
+        tags: powerscale
+
+        - name: Show PowerScale server response
+        debug:
+            msg: "PowerScale server ({{ inventory_hostname }}) is available: {{ powerscale_result.status }}"
+        when: powerscale_result.status == 200
+        tags: powerscale
