@@ -1,0 +1,30 @@
+---
+- name: Add LUN to Powermax Storage Array using prompts
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Create a new volume on Powermax and add to existing storage group
+      uri:
+        url: "http://localhost:5000/api/powermax/v1/volumes"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          unispherehost: "{{ host }}"
+          user: "{{ username }}"
+          password: "{{ pw }}"
+          serial_no: "{{ serial_num }}"
+          verifycert: false
+          vol_name: "{{ volname }}"
+          sg_name: "{{ storagename }}"
+          size: "{{ lunsize }}"
+          cap_unit: "{{ capunit }}"
+          state: "present"
+        status_code: [200, 201]
+        return_content: yes
+      register: result
+
+    - name: Show output
+      debug:
+        msg: "{{ result.json }}"

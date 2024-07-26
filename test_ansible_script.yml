@@ -1,0 +1,5 @@
+- name: Check availability of all mock servers
+  hosts: localhost
+  tasks:
+    - name: Ping all servers
+      ping:
